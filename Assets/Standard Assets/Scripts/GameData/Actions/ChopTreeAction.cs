@@ -42,17 +42,19 @@ public class ChopTreeAction : GoapAction
 		float closestDist = 0;
 		
 		foreach (TreeComponent tree in trees) {
-			if (closest == null) {
-				// first one, so choose it for now
-				closest = tree;
-				closestDist = (tree.gameObject.transform.position - agent.transform.position).magnitude;
-			} else {
-				// is this one closer than the last?
-				float dist = (tree.gameObject.transform.position - agent.transform.position).magnitude;
-				if (dist < closestDist) {
-					// we found a closer one, use it
+			if (tree.isInUse == false) {
+				if (closest == null) {
+					// first one, so choose it for now
 					closest = tree;
-					closestDist = dist;
+					closestDist = (tree.gameObject.transform.position - agent.transform.position).magnitude;
+				} else {
+					// is this one closer than the last?
+					float dist = (tree.gameObject.transform.position - agent.transform.position).magnitude;
+					if (dist < closestDist) {
+						// we found a closer one, use it
+						closest = tree;
+						closestDist = dist;
+					}
 				}
 			}
 		}
@@ -61,6 +63,7 @@ public class ChopTreeAction : GoapAction
 
 		targetTree = closest;
 		target = targetTree.gameObject;
+		targetTree.isInUse = true;
 		
 		return closest != null;
 	}
@@ -81,6 +84,7 @@ public class ChopTreeAction : GoapAction
 				Destroy(backpack.tool);
 				backpack.tool = null;
 			}
+			targetTree.isInUse = false;
 		}
 		return true;
 	}

@@ -7,6 +7,7 @@ public class SupplyPileComponent : MonoBehaviour
 	public int numLogs; // makes firewood
 	public int numFirewood; // what we want to make
 	public int numOre; // makes tools
+	public int numBerries;
 	
 }
 

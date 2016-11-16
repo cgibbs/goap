@@ -1,0 +1,1 @@
+using UnityEngine;using System.Collections;public class BerryBushComponent : MonoBehaviour{		public bool isInUse = false;}

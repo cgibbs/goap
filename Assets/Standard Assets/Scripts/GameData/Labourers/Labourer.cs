@@ -18,7 +18,7 @@ public abstract class Labourer : MonoBehaviour, IGoap
 	void Start ()
 	{
 		if (backpack == null)
-			backpack = gameObject.AddComponent ("BackpackComponent" ) as BackpackComponent;
+			backpack = gameObject.AddComponent <BackpackComponent>( ) as BackpackComponent;
 		if (backpack.tool == null) {
 			GameObject prefab = Resources.Load<GameObject> (backpack.toolType);
 			GameObject tool = Instantiate (prefab, transform.position, transform.rotation) as GameObject;
@@ -43,6 +43,7 @@ public abstract class Labourer : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("hasLogs", (backpack.numLogs > 0) ));
 		worldData.Add(new KeyValuePair<string, object>("hasFirewood", (backpack.numFirewood > 0) ));
 		worldData.Add(new KeyValuePair<string, object>("hasTool", (backpack.tool != null) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBerries", (backpack.numBerries > 0) ));
 
 		return worldData;
 	}
@@ -58,6 +59,7 @@ public abstract class Labourer : MonoBehaviour, IGoap
 		// Not handling this here since we are making sure our goals will always succeed.
 		// But normally you want to make sure the world state has changed before running
 		// the same goal again, or else it will just fail.
+		Debug.Log("<color=orange>Plan Failed</color> " + GoapAgent.prettyPrint(failedGoal));
 	}
 
 	public void planFound (HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
